@@ -164,18 +164,12 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public int indexOf(Object target) {
-		int index = 0;
-		if (size == 0) {
-			return -1;
-		}
-		else {
-			for (int i =0; i < size; i++) {
-				if (equals(target, get(i))) {
-					return i;
-				}
+		for (int i =0; i < size; i++) {
+			if (equals(target, get(i))) {
+				return i;
 			}
-			return -1;
 		}
+		return -1;
 	}
 
 	/** Checks whether an element of the array is the target.
