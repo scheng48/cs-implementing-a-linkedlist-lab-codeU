@@ -85,8 +85,26 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int index, E element) {
-		// TODO: fill this in
-	}
+		if (index < 0 || index > size()) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		
+		if (index == 0) {
+			head = new Node(element, getNode(index));
+			size++;
+		}
+		else if (index == size()) {
+			getNode(index-1).next = new Node(element);
+			size++;
+		}
+		else {
+			Node prevNode = getNode(index-1);
+			Node node = new Node(element, getNode(index));
+			prevNode.next = node;
+			size++;
+		}
+	}	
 
 	@Override
 	public boolean addAll(Collection<? extends E> collection) {
@@ -146,8 +164,18 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public int indexOf(Object target) {
-		// TODO: fill this in
-		return -1;
+		int index = 0;
+		if (size == 0) {
+			return -1;
+		}
+		else {
+			for (int i =0; i < size; i++) {
+				if (equals(target, get(i))) {
+					return i;
+				}
+			}
+			return -1;
+		}
 	}
 
 	/** Checks whether an element of the array is the target.
@@ -201,14 +229,33 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean remove(Object obj) {
-		// TODO: fill this in
-		return false;
+		int index = indexOf(obj);
+		if (index == -1) {
+			return false;
+		}
+		remove(index);
+		return true;
 	}
 
 	@Override
 	public E remove(int index) {
-		// TODO: fill this in
-		return null;
+		if (index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		Node node = getNode(index);
+		E element = node.cargo;
+
+		if (index == 0) {
+			head = node.next;
+			size--;
+		}
+		else {
+			getNode(index-1).next = node.next;
+			size--;
+		}
+
+		return element;
 	}
 
 	@Override
